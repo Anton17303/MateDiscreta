@@ -1,0 +1,83 @@
+def mostrar_menu():
+    print("\nMenú Principal")
+    print("1. Construir conjuntos")
+    print("2. Operar conjuntos")
+    print("3. Finalizar")
+
+def ingresar_conjunto(nombre):
+    while True:
+        conjunto = input(f"Ingrese los elementos del conjunto {nombre} (letras A-Z o dígitos 0-9, separados por comas): ").strip()
+        elementos = conjunto.split(',')
+        if all(e.isalnum() and len(e) == 1 and e.upper() <= 'Z' for e in elementos):
+            return set(elementos)
+        else:
+            print("Entrada no válida. Asegúrese de ingresar solo letras (A-Z) o dígitos (0-9), separados por comas.")
+
+def complementar_conjunto(conjunto):
+    universo = set('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    return universo - conjunto
+
+def unir_conjuntos(conjunto1, conjunto2):
+    return conjunto1 | conjunto2
+
+def intersectar_conjuntos(conjunto1, conjunto2):
+    return conjunto1 & conjunto2
+
+def diferenciar_conjuntos(conjunto1, conjunto2):
+    return conjunto1 - conjunto2
+
+def diferencia_simetrica_conjuntos(conjunto1, conjunto2):
+    return conjunto1 ^ conjunto2
+
+def operar_conjuntos(conjunto1, conjunto2):
+    while True:
+        print("\nSeleccione la operación de conjuntos:")
+        print("1. Complemento")
+        print("2. Unión")
+        print("3. Intersección")
+        print("4. Diferencia")
+        print("5. Diferencia Simétrica")
+        print("6. Volver al menú principal")
+        
+        opcion = input("Ingrese la opción deseada: ").strip()
+        
+        if opcion == '1':
+            print("Complemento de A:", complementar_conjunto(conjunto1))
+            print("Complemento de B:", complementar_conjunto(conjunto2))
+        elif opcion == '2':
+            print("Unión de A y B:", unir_conjuntos(conjunto1, conjunto2))
+        elif opcion == '3':
+            print("Intersección de A y B:", intersectar_conjuntos(conjunto1, conjunto2))
+        elif opcion == '4':
+            print("Diferencia de A - B:", diferenciar_conjuntos(conjunto1, conjunto2))
+            print("Diferencia de B - A:", diferenciar_conjuntos(conjunto2, conjunto1))
+        elif opcion == '5':
+            print("Diferencia Simétrica de A y B:", diferencia_simetrica_conjuntos(conjunto1, conjunto2))
+        elif opcion == '6':
+            break
+        else:
+            print("Opción no válida. Intente nuevamente.")
+
+def main():
+    while True:
+        mostrar_menu()
+        opcion = input("Ingrese la opción deseada: ").strip()
+        
+        if opcion == '1':
+            conjunto_a = ingresar_conjunto("A")
+            conjunto_b = ingresar_conjunto("B")
+            print("Conjunto A:", conjunto_a)
+            print("Conjunto B:", conjunto_b)
+        elif opcion == '2':
+            try:
+                operar_conjuntos(conjunto_a, conjunto_b)
+            except NameError:
+                print("Debe construir los conjuntos A y B primero.")
+        elif opcion == '3':
+            print("Finalizando el programa...")
+            break
+        else:
+            print("Opción no válida. Intente nuevamente.")
+
+if __name__ == "__main__":
+    main()
